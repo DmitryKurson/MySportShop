@@ -5,17 +5,17 @@
 {% endblock %}
 
 {% block content %}
-<h3>Меню одягу</h3>
-
+<h1>Меню одягу</h1>
 <a href="clothes/create">Додати одяг</a>
-
+<br>
 {% for el in products %}
 <div>
-    <h5>{{ el.title }}</h5>
-    <h5>{{ el.price}}</h5>
-    <h5>{{ el.country }}</h5>
+    <h5>Назва: {{ el.title }}</h5>
+    <h5>Ціна: {{ el.price}}</h5>
+    <h5>Країна: {{ el.country }}</h5>
     <button>Детальніше</button>
 </div>
+<br>
 {% endfor %}
 
 {% endblock %}

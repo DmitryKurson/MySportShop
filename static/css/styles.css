@@ -7,6 +7,10 @@ body {
     color: #333;
 }
 
+h1 {
+    text-align:center
+}
+
 /* Шапка сайту */
 .header {
     background-color: #0073e6;
@@ -35,51 +39,7 @@ body {
     border-radius: 5px;
 }
 
-/* Контейнер товарів */
-.products {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 20px;
-}
-.product {
-    background-color: white;
-    margin: 15px;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 250px;
-    text-align: center;
-}
-.product img {
-    width: 100%;
-    border-radius: 5px;
-}
-.product h3 {
-    font-size: 20px;
-    margin: 10px 0;
-}
-.product p {
-    font-size: 16px;
-    color: #555;
-}
-.product .price {
-    font-size: 18px;
-    color: #0073e6;
-    font-weight: bold;
-}
-.product button {
-    background-color: #0073e6;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 16px;
-}
-.product button:hover {
-    background-color: #005bb5;
-}
+
 
 /* Підвал сайту */
 .footer {

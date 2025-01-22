@@ -30,23 +30,87 @@ class Product(db.Model):
         return '<Product %r>' % self.id
 
 
+class Client(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(30), nullable=False)
+    surname = db.Column(db.String(30), nullable=False)
+    phone = db.Column(db.String(30), nullable=False)
+    cart = db.Column(db.String(1000), nullable=False)
+    email = db.Column(db.String(50), nullable=False)
+    password = db.Column(db.String(10), nullable=False)
+
+    def __repr__(self):
+        return '<Client %r>' % self.id
 
 
-@app.route("/")
-def index():
-    return render_template("welcome_page.html")
+
+
+@app.route("/", methods=['POST', 'GET'])
+def login():
+    if request.method == "POST":
+        login = request.form['login']
+        password = request.form['password']
+
+        hash_password = password #todo
+
+        clients = Client.query.all()
+
+
+        #...
+
+        return render_template("products_a.html")
+    else:
+        return render_template("login.html")
+
+
+@app.route("/login/registration", methods=['POST', 'GET'])
+def show_registration():
+    if request.method == "POST":
+        name = request.form['name']
+        surname = request.form['surname']
+        phone = request.form['phone']
+        email = request.form['email']
+        password = request.form['password']
+
+        hash_password = password #todo
+
+
+
+
+        new_client = Client(name=name, surname=surname, phone=phone, email=email, password=hash_password)
+
+        try:
+            db.session.add(new_client)
+            db.session.commit()
+            return redirect("/")
+        except:
+            return "Помилка при додаванні статті"
+    else:
+        return render_template("registration.html")
+
+
+
 
 @app.route("/about")
 def about():
     return render_template("about.html")
 
-@app.route("/clothes")
-def clothes():
-    products = Product.query.all()
-    return render_template("clothes_a.html", products=products)
 
-@app.route("/clothes/create", methods=['POST', 'GET'])
-def create_clothes():
+
+
+
+
+
+
+
+
+@app.route("/product")
+def product():
+    products = Product.query.all()
+    return render_template("product_a.html", products=products)
+
+@app.route("/product/create", methods=['POST', 'GET'])
+def create_product():
     if request.method == "POST":
         title = request.form['title']
         price = request.form['price']

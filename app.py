@@ -1,13 +1,18 @@
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-
+import hashlib
 from werkzeug.utils import redirect
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///clothes_shop.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+
+def compute_sha512_hash(input_string):
+    sha512_hash = hashlib.sha512()
+    sha512_hash.update(input_string.encode('utf-8'))
+    return sha512_hash.hexdigest()
 
 class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -50,15 +55,16 @@ def login():
     if request.method == "POST":
         login = request.form['login']
         password = request.form['password']
-
-        hash_password = password #todo
+        hash_password = compute_sha512_hash(password)
 
         clients = Client.query.all()
 
-
         #...
-
-        return render_template("products_a.html")
+        found_user = None
+        if found_user.email.endswith("admin"):
+            return render_template("welcome_page.html")
+        else:
+            return render_template("products_u.html")
     else:
         return render_template("login.html")
 
@@ -71,20 +77,14 @@ def show_registration():
         phone = request.form['phone']
         email = request.form['email']
         password = request.form['password']
-
-        hash_password = password #todo
-
-
-
-
-        new_client = Client(name=name, surname=surname, phone=phone, email=email, password=hash_password)
-
+        hash_password = compute_sha512_hash(password)
+        new_client = Client(name=name, surname=surname, phone=phone, email=email, password=str(hash_password))
         try:
             db.session.add(new_client)
             db.session.commit()
             return redirect("/")
         except:
-            return "Помилка при додаванні статті"
+            return "Помилка при додаванні клієнта"
     else:
         return render_template("registration.html")
 

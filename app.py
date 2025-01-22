@@ -58,18 +58,24 @@ def login():
         hash_password = compute_sha512_hash(password)
 
         clients = Client.query.all()
-
-        #...
         found_user = None
+        for i in clients:
+            if i.email == login:
+                if i.password == hash_password:
+                    found_user = i
+                    break
+        if found_user == None:
+            return redirect("/")
         if found_user.email.endswith("admin"):
             return render_template("welcome_page.html")
         else:
-            return render_template("products_u.html")
+            products = Product.query.all()
+            return render_template("product_u.html", products=products)
     else:
         return render_template("login.html")
 
 
-@app.route("/login/registration", methods=['POST', 'GET'])
+@app.route("/registration", methods=['POST', 'GET'])
 def show_registration():
     if request.method == "POST":
         name = request.form['name']
@@ -78,7 +84,7 @@ def show_registration():
         email = request.form['email']
         password = request.form['password']
         hash_password = compute_sha512_hash(password)
-        new_client = Client(name=name, surname=surname, phone=phone, email=email, password=str(hash_password))
+        new_client = Client(name=name, surname=surname, phone=phone, email=email, password=str(hash_password),cart="")
         try:
             db.session.add(new_client)
             db.session.commit()
@@ -88,24 +94,16 @@ def show_registration():
     else:
         return render_template("registration.html")
 
-
-
-
-@app.route("/about")
-def about():
-    return render_template("about.html")
-
-
+@app.route("/clients")
+def show_clients():
+    clients = Client.query.all()
+    return render_template("clients.html", clients=clients)
 
 
 
 
-
-
-
-
-@app.route("/product")
-def product():
+@app.route("/products")
+def show_products():
     products = Product.query.all()
     return render_template("product_a.html", products=products)
 
@@ -123,9 +121,22 @@ def create_product():
             db.session.commit()
             return redirect("/")
         except:
-            return "Помилка при додаванні статті"
+            return "Помилка при додаванні товару"
     else:
         return render_template("product_create.html")
+
+
+
+
+
+
+
+
+
+
+@app.route("/about")
+def about():
+    return render_template("about.html")
 
 if __name__ == "__main__":
     with app.app_context():

@@ -70,7 +70,7 @@ def login():
             return render_template("welcome_page.html")
         else:
             products = Product.query.all()
-            return render_template("product_u.html", products=products)
+            return render_template("product_u.html", products=products, id=found_user.id)
     else:
         return render_template("login.html")
 
@@ -98,6 +98,11 @@ def show_registration():
 def show_clients():
     clients = Client.query.all()
     return render_template("clients.html", clients=clients)
+
+@app.route("/<int:id>/buy")
+def buy(id, el):
+    client = Client.query.get_or_404(id)
+    #client.cart +=
 
 
 

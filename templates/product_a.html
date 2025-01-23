@@ -13,13 +13,15 @@
 {% for el in products %}
 <div>
     <h5>Назва: {{ el.title }}</h5>
-    <h5>Ціна: {{ el.price}}</h5>
+    <h5>Ціна: {{ el.price }}</h5>
     <h5>Країна: {{ el.country }}</h5>
-    {% block button %}
+    {% set product = el %}  {# Передаємо el у змінну product #}
+    {% block button scoped %}
     <button>Детальніше</button>
     {% endblock %}
 </div>
 <br>
 {% endfor %}
+
 
 {% endblock %}

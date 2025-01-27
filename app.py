@@ -1,3 +1,5 @@
+from itertools import product
+
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
@@ -70,7 +72,7 @@ def login():
             return render_template("welcome_page.html")
         else:
             products = Product.query.all()
-            return render_template("product_u.html", products=products, id=found_user.id)
+            return render_template("product_u.html", products=products, c_id=found_user.id)
     else:
         return render_template("login.html")
 
@@ -99,10 +101,20 @@ def show_clients():
     clients = Client.query.all()
     return render_template("clients.html", clients=clients)
 
-@app.route("/<int:id>/buy")
-def buy(id, el):
+@app.route("/<int:c_id>/buy/<int:id>")
+def buy(c_id, id):
+    client = Client.query.get_or_404(c_id)
+    client.cart += Product.query.get_or_404(id).title + " "
+    products = Product.query.all()
+    db.session.commit()
+    return render_template("product_u.html", products=products, id=client.id)
+
+@app.route("/<int:id>/cart")
+def show_cart(id):
     client = Client.query.get_or_404(id)
-    #client.cart +=
+    client_cart = client.cart
+    return render_template("cart.html", cart=client_cart, id=client.id)
+
 
 
 

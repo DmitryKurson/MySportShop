@@ -171,6 +171,15 @@ def product_update(id):
     else:
         return render_template("product_update.html", product=product)
 
+@app.route("/product/<int:id>/delete", methods=['POST', 'GET'])
+def product_delete(id):
+    product = Product.query.get(id)
+    try:
+        db.session.delete(product)
+        db.session.commit()
+        return redirect("/products")
+    except:
+        return "Сталася помилка видалення"
 
 
 

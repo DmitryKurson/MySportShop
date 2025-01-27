@@ -113,10 +113,16 @@ def buy(c_id, id):
 def show_cart(id):
     client = Client.query.get_or_404(id)
     client_cart = client.cart
+
     return render_template("cart.html", cart=client_cart, id=client.id)
 
-
-
+@app.route("/<int:id>/buy/finish")
+def finish(id):
+    client = Client.query.get_or_404(id)
+    client.cart = ""
+    products = Product.query.all()
+    db.session.commit()
+    return render_template("product_u.html", products=products, id=client.id)
 
 
 @app.route("/products")

@@ -154,8 +154,22 @@ def product_detail(id):
     product = Product.query.get(id)
     return render_template("product_details.html", product=product)
 
+@app.route("/product/<int:id>/update", methods=['POST', 'GET'])
+def product_update(id):
+    product = Product.query.get(id)
+    if request.method == "POST":
+        product.title = request.form['title']
+        product.price = request.form['price']
+        product.country = request.form['country']
 
+        try:
+            db.session.commit()
+            return redirect("/products")
+        except:
+            return "Сталася помилка редагування"
 
+    else:
+        return render_template("product_update.html", product=product)
 
 
 

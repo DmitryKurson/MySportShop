@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Оновлення інформації
+{% endblock %}
+
+{% block content %}
+
+<div>
+    <h1>Оновлення інформації</h1>
+    <form method="post">
+        <p>Назва товару: </p>
+        <input type="text" name="title" id="title" value="{{ product.title }}" placeholder="Введіть назву"><br>
+        <p>Ціна: </p>
+        <input type="number" name="price" id="price" value="{{ product.price }}" placeholder="Введіть ціну"><br>
+        <p>Країна: </p>
+        <input type="text" name="country" id="country" value="{{ product.country }}" placeholder="Введіть країну"><br><br>
+        <input type="submit" value="Оновити">
+    </form>
+</div>
+
+{% endblock %}

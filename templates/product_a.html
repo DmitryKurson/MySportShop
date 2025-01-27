@@ -17,7 +17,7 @@
     <h5>Країна: {{ el.country }}</h5>
     {% set product = el %}  {# Передаємо el у змінну product #}
     {% block button scoped %}
-    <button>Детальніше</button>
+    <a href="/product/{{ el.id }}">Детальніше</a>
     {% endblock %}
 </div>
 <br>

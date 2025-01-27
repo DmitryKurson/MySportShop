@@ -149,6 +149,11 @@ def create_product():
         return render_template("product_create.html")
 
 
+@app.route("/product/<int:id>")
+def product_detail(id):
+    product = Product.query.get(id)
+    return render_template("product_details.html", product=product)
+
 
 
 

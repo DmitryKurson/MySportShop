@@ -1,0 +1,20 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Детальніше
+{% endblock %}
+
+{% block content %}
+
+<div>
+    <h1>Детальніше про товар</h1>
+    <p> {{ product.title }} </p>
+    <p> {{ product.price }} </p>
+    <p> {{ product.country }} </p>
+
+    <a href="{{product.id}}/update">Редагувати</a>
+    <a href="{{product.id}}/delete">Видалити</a>
+
+</div>
+
+{% endblock %}

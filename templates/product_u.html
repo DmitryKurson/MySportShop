@@ -2,14 +2,9 @@
 
 {% block add %}
     <a href="{{ c_id }}/cart"> До кошика </a>
+
 {% endblock %}
-
-
-
 {% block button scoped %}
     <a href="{{ c_id }}/buy/{{ product.id }}">Купити</a>
 {% endblock %}
 
-<form method="POST">
-    <button type="submit">Оформити замовлення</button>
- </form>

@@ -215,10 +215,15 @@ def client_delete(id):
     except:
         return "Сталася помилка видалення"
 
-
-
-
-
+@app.route("/client/<int:id>/reset_password")
+def client_reset_password(id):
+    client = Client.query.get(id)
+    try:
+        client.password = compute_sha512_hash("1234")
+        db.session.commit()
+        return redirect("/clients")
+    except:
+        return "Сталася помилка скидання паролю"
 
 @app.route("/about")
 def about():

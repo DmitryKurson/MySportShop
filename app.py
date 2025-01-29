@@ -184,6 +184,41 @@ def product_delete(id):
 
 
 
+@app.route("/client/<int:id>")
+def client_detail(id):
+    client = Client.query.get(id)
+    return render_template("client_details.html", client=client)
+
+@app.route("/client/<int:id>/update", methods=['POST', 'GET'])
+def client_update(id):
+    client = Client.query.get(id)
+    if request.method == "POST":
+        client.name = request.form['name']
+        client.surname = request.form['surname']
+        client.phone = request.form['phone']
+
+        try:
+            db.session.commit()
+            return redirect("/clients")
+        except:
+            return "Сталася помилка редагування"
+    else:
+        return render_template("client_update.html", client=client)
+
+@app.route("/client/<int:id>/delete", methods=['POST', 'GET'])
+def client_delete(id):
+    client = Client.query.get(id)
+    try:
+        db.session.delete(client)
+        db.session.commit()
+        return redirect("/clients")
+    except:
+        return "Сталася помилка видалення"
+
+
+
+
+
 
 @app.route("/about")
 def about():

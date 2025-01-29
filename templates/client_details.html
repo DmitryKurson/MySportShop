@@ -1,0 +1,20 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Детальніше
+{% endblock %}
+
+{% block content %}
+
+<div>
+    <h1>Детальніше про клієнта</h1>
+    <p>Ім'я: {{ client.name }} </p>
+    <p>Прізвище: {{ client.surname }} </p>
+    <p>Номер телефону: {{ client.phone }}</p>
+
+    <a href="{{client.id}}/update">Редагувати</a>
+    <a href="{{client.id}}/delete">Видалити</a>
+
+</div>
+
+{% endblock %}
